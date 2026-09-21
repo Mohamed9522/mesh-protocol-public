@@ -85,8 +85,7 @@ We would rather you hear these from us:
 
 - **Testnet only.** No real funds move. Mainnet depends on legal review and is not scheduled.
 - **The cryptography has not been independently reviewed.** It is built from standard primitives (X25519, HKDF-SHA256, HMAC-SHA256, XSalsa20-Poly1305) following the Signal specifications, but the composition is our own and unreviewed. The design is not wire-compatible with Signal.
-- **Metadata is visible to the relay.** The relay cannot read message content, but it does see delivery metadata: which address sends to which, and when.
-- **The relay runs on a server in Moscow (Russia)**, hosted by RUVDS, under the domain meshprotocol.ru. User-run relays are on the roadmap.
+- **One relay today, run by us.** All messages pass through a single relay that we operate. It cannot read message content, but it does see delivery metadata: which address sends to which, and when. Removing that single point is the main goal: see [Run your own relay](#the-plan-run-your-own-relay).
 - **Backups.** The relay's database is backed up to a private Cloudflare R2 bucket; a message that was delivered and deleted can persist in a backup for about 2 days.
 - **On your phone,** message text is encrypted, but contacts and timestamps are not. Malware running as the app, or a rooted phone, can still read them.
 - **One device per recovery phrase.** Restoring on a new phone brings back your account, not your old chats.
@@ -108,6 +107,10 @@ We would rather you hear these from us:
 
 Full policy: [meshprotocol.ru/privacy.html](https://meshprotocol.ru/privacy.html). In short, the relay stores your public Stellar address, your public encryption key, your username, your push token, prekeys (public), and each encrypted message until it is delivered (at most 14 days if never collected). Usage logs keep a salted hash of your address and IP for 90 days, never message content.
 
+## The plan: run your own relay
+
+Today there is one relay, run by us. The goal is a **network of relays that anyone can run**: a small program (and, later, a ready-made image) that turns an old office PC or a Raspberry Pi at home into your own message server. Your phone and your contacts' phones would connect through it, your messages would wait there until delivered, and payments would still go straight over Stellar. Think of it as your own messaging server at home, with money transfer built in. This is a roadmap item, not something you can do yet.
+
 ## Source code
 
 The source code is currently **private**. We plan to share the design notes and a code map for independent cryptographic review, and to publish more once that is done. Watch this repository for that announcement.
@@ -120,7 +123,7 @@ The source code is currently **private**. We plan to share the design notes and 
 
 **Can MESH read my messages?** No. Messages are encrypted on your phone with keys the relay never has. It can see who sent to whom and when.
 
-**Where is the relay?** On a VPS in Moscow (RUVDS). See Known limits.
+**Where is the relay?** It is one relay that we operate on a rented server (RUVDS, Russia). Message content is end-to-end encrypted, so the server cannot read it; it sees delivery metadata. The plan is that you can run your own relay instead (see below).
 
 ## Contact
 
