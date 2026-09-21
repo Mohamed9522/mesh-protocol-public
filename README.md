@@ -1,230 +1,139 @@
 # MESH Protocol
 
-**Encrypted messaging on the Stellar blockchain.**
-No phone number. No email. No central server. No identity required.
+**An Android messenger where money moves inside the chat.**
+End-to-end encrypted with forward secrecy. Identity is a 12-word recovery phrase: no phone number, no email. Payments are Stellar transactions sent from inside a conversation.
 
-🌐 [meshprotocol.ru](https://meshprotocol.ru) · 📧 contact@meshprotocol.ru
+🌐 [meshprotocol.ru](https://meshprotocol.ru) · 📧 contact@meshprotocol.ru · 🐞 [Report an issue](https://github.com/Mohamed9522/mesh-protocol-public/issues)
+
+> **Status: testnet beta, early software, built by one developer.**
+> Payments use **Stellar testnet: no real funds**. The cryptography has **not** yet had an independent review (a review package is being prepared). Please read [Known limits](#known-limits) before you use it.
 
 ---
 
 ## What is MESH?
 
-MESH is a decentralized, end-to-end encrypted messaging app. Every message is encrypted on your device before it leaves, stored on IPFS, and delivered via a Stellar blockchain transaction. No company, government, or server operator can read your messages — not even us.
+MESH is a messenger with built-in payments. Messages are encrypted on your phone before they leave it. A small **relay server** carries each encrypted message and keeps it only until your recipient's phone confirms delivery, then deletes it. You can send XLM to the person you are talking to from inside the chat, and the receiving app verifies the payment on the Stellar network.
 
-Your identity is a 12-word recovery phrase. That is all. No account. No verification. No data collected.
-
----
+Your identity is a 12-word recovery phrase. It generates your Stellar address and your encryption keys on your device. There is no account to create and no personal data to hand over.
 
 ## How it works
 
 ```
-Sender                          Recipient
-──────                          ─────────
-1. Encrypt message (NaCl)
-2. Upload encrypted blob → IPFS
-3. Send Stellar transaction (pointer in memo)
-4. Notify relay server
-                                5. Check relay for pending
-                                6. Fetch blob from IPFS
-                                7. Decrypt with private key
-                                8. Message appears
+Sender's phone                       Relay (temporary)                 Recipient's phone
+──────────────                       ─────────────────                 ─────────────────
+1. Encrypt the message on the phone
+   (X3DH + Double Ratchet: every
+   message gets its own key)
+2. Signed request ───────────────►  3. Hold the encrypted message
+                                       until delivery is confirmed
+                                    4. Push notification (no content) ─► 5. Fetch, decrypt on the phone
+                                                                        6. Confirm delivery
+                                    7. Relay deletes its copy  ◄────────
 ```
 
-The relay server only ever handles encrypted pointers — never message content.
+- **Ordinary messages never touch the blockchain.** Only payments are Stellar transactions.
+- **Forward secrecy:** each message key is used once and then deleted, so a phone compromised later cannot open messages that were already sent. Keys also heal after a compromise once the conversation continues.
+- **Safety numbers:** a 60-digit number (and QR code) that two people compare outside the app to confirm nobody swapped a key.
+- **Encrypted on your phone:** message text is stored encrypted in the app's database. An optional **app lock** (fingerprint or PIN) also blocks screenshots and hides MESH in the app switcher.
+- **Signed updates:** app updates are signed with a key that only the developer holds.
 
----
-
-## Features — Testnet v0.0.14
+## Features (beta)
 
 | Feature | Status |
-|---------|--------|
-| End-to-end encrypted messaging | ✅ Working |
+|---|---|
+| End-to-end encrypted messaging with forward secrecy | ✅ Working |
 | @username search and discovery | ✅ Working |
-| Message request inbox | ✅ Working |
-| Send XLM directly in chat | ✅ Working |
-| BIP39 12-word recovery phrase | ✅ Working |
-| Change username from Settings | ✅ Working |
-| Chat background (photo or color) | ✅ Working |
-| Accent color themes | ✅ Working |
-| Push notifications | 🔲 Coming soon |
-| Voice notes | 🔲 Coming soon |
-| Image sharing | 🔲 Coming soon |
-| Profile pictures | 🔲 Coming soon |
-| iOS app | 🔲 Coming soon |
-
----
+| Message requests (control who can reach you) | ✅ Working |
+| Send XLM inside a chat, verified on Stellar (testnet) | ✅ Working |
+| Photos | ✅ Working |
+| Push notifications | ✅ Working |
+| Safety numbers (key verification) | ✅ Working |
+| Encrypted message storage on the phone | ✅ Working |
+| Optional app lock (fingerprint / PIN) | ✅ Working |
+| Copy, forward, delete a message for yourself; delete a chat | ✅ Working |
+| Day separators in chats | ✅ Working |
+| Recovery phrase restore on a new phone (account, not old chats) | ✅ Working |
+| Signed over-the-air updates | ✅ Working |
+| USDC payments and payment requests | 🔲 Planned |
+| Stellar mainnet | 🔲 Planned, only after legal review |
+| Voice notes, file sharing | 🔲 Planned |
+| Profile pictures | 🔲 Planned |
+| iOS, desktop | 🔲 Planned |
 
 ## Download
 
-### Testnet (pre-release)
+The current beta build is **0.2.0 (build 6)**. It will be published on the [Releases page](https://github.com/Mohamed9522/mesh-protocol-public/releases) together with its **SHA-256 checksum**. Check the checksum before installing.
 
-> ⚠️ This is a testnet build. Stellar Testnet XLM only — no real funds involved.
+> ⚠️ The older **v0.0.14** release on that page is **obsolete**. It targets a server that no longer exists and cannot connect. Do not use it.
 
-**[⬇ Download MESH v0.0.14 — Android APK](https://github.com/Mohamed9522/mesh-protocol-public/releases/tag/v0.0.14)**
+Requirements: Android 7.0 or newer. The APK is about 117 MB. It is installed outside Google Play, so Android will ask you to allow installs from your browser or file manager.
 
-Android only. Free. No account required to download.
+## Getting started
 
-### Mainnet
+1. **Install the APK** (allow "Install unknown apps" for the app you downloaded it with).
+2. **Create your identity.** MESH shows a 12-word recovery phrase. **Write it on paper and keep it safe.** It is your account. If you lose it, nobody, including us, can recover it.
+3. **Choose a username** (letters, numbers, underscores).
+4. **Get testnet XLM.** Open your profile, copy your address (it starts with `G`), and visit `https://friendbot.stellar.org/?addr=YOUR_ADDRESS`. These are test coins with no value.
+5. **Find someone.** Use Search to look up a username. Start a chat. If a stranger writes to you first, it appears in Message Requests.
+6. **Send test XLM** from the attach menu in a chat. The receiver's phone shows the payment as verified on Stellar.
+7. **Optional:** turn on App lock under Settings, then Security. Compare **safety numbers** with a friend from the contact's profile.
+8. **Updates** arrive on their own; Settings has "Check for updates".
 
-Coming soon. Follow this repo for updates.
+## Known limits
 
----
+We would rather you hear these from us:
 
-## Getting Started — Step by Step
+- **Testnet only.** No real funds move. Mainnet depends on legal review and is not scheduled.
+- **The cryptography has not been independently reviewed.** It is built from standard primitives (X25519, HKDF-SHA256, HMAC-SHA256, XSalsa20-Poly1305) following the Signal specifications, but the composition is our own and unreviewed. The design is not wire-compatible with Signal.
+- **Metadata is visible to the relay.** The relay cannot read message content, but it does see delivery metadata: which address sends to which, and when.
+- **The relay runs on a server in Moscow (Russia)**, hosted by RUVDS, under the domain meshprotocol.ru. User-run relays are on the roadmap.
+- **Backups.** The relay's database is backed up to a private Cloudflare R2 bucket; a message that was delivered and deleted can persist in a backup for about 2 days.
+- **On your phone,** message text is encrypted, but contacts and timestamps are not. Malware running as the app, or a rooted phone, can still read them.
+- **One device per recovery phrase.** Restoring on a new phone brings back your account, not your old chats.
+- Android only. One developer. Expect bugs.
 
-### Step 1 — Install the APK
-
-1. Download the APK from the link above
-2. On your Android device go to **Settings → Security**
-3. Enable **"Install from unknown sources"** (or "Install unknown apps")
-4. Open the downloaded APK file and tap Install
-
----
-
-### Step 2 — Create your account
-
-When you open MESH for the first time you will see a 12-word recovery phrase.
-
-**Write these 12 words down. Store them somewhere safe.**
-
-This phrase IS your account. It generates your Stellar address and encryption keys. If you lose it, your account cannot be recovered — by you or by anyone else. MESH never stores it.
-
-Tap **Continue** after saving your phrase.
-
----
-
-### Step 3 — Choose your username
-
-Pick an `@username`. This is how other people find you on MESH. Rules:
-- 3 to 20 characters
-- Letters, numbers, underscores only
-- No spaces
-
-You can change your username later in Settings if it is available.
-
-Tap **Set Username** to continue.
-
----
-
-### Step 4 — Activate your testnet wallet
-
-Your Stellar address was just generated. Before you can send messages, your address needs to exist on the Stellar testnet network. This is a one-time step — it takes 10 seconds.
-
-1. On your phone or any browser, open this link and replace `YOUR_ADDRESS` with your Stellar address:
-
-```
-https://friendbot.stellar.org/?addr=YOUR_ADDRESS
-```
-
-2. You can find your Stellar address by tapping the **M logo** in the top left of the chat list screen.
-
-3. The page will return a JSON response saying success. Your wallet now has 10,000 testnet XLM — enough to send hundreds of thousands of messages.
-
----
-
-### Step 5 — Find someone and start chatting
-
-1. Tap the **⋮ menu** in the top right of the chat list
-2. Tap **Add Contact**
-3. Search for someone by their `@username`
-4. Open their profile and send a message
-
-If someone sends you a message first and you have not added them, it will appear in **Message Requests** (also in the ⋮ menu). You can accept or delete it.
-
----
-
-### Step 6 — Send XLM (optional)
-
-Inside any chat, tap the contact's name at the top to open their profile. You will see a **Send XLM** button. Enter an amount and confirm. The transfer happens instantly on the Stellar testnet.
-
----
-
-## Tech Stack
+## Tech stack
 
 | Component | Technology |
-|-----------|-----------|
-| Mobile app | React Native / Expo (Android) |
-| Encryption | NaCl box — Curve25519 + XSalsa20 + Poly1305 |
-| Message storage | IPFS via Pinata |
-| Delivery layer | Stellar blockchain |
-| Identity | BIP39 mnemonic → Stellar + NaCl keypair |
-| Relay server | Node.js / Fastify / SQLite |
-| Local storage | Expo SQLite + SecureStore |
+|---|---|
+| Mobile app | React Native / Expo, Android |
+| Encryption | X3DH + Double Ratchet; X25519, HKDF-SHA256, HMAC-SHA256, XSalsa20-Poly1305 (`@noble/curves`, `@noble/hashes`, `tweetnacl`) |
+| Identity | BIP39 recovery phrase → Stellar (Ed25519) and X25519 keys |
+| Payments | Stellar, verified on-chain by the receiving app |
+| Relay | Node.js 22, Fastify, SQLite, Caddy (HTTPS), Litestream (backups) |
+| Push | Firebase Cloud Messaging via Expo (generic text, no content) |
+| On the phone | Expo SQLite (message text encrypted), Expo SecureStore (Android Keystore) |
 
----
+## Privacy
 
-## Roadmap
+Full policy: [meshprotocol.ru/privacy.html](https://meshprotocol.ru/privacy.html). In short, the relay stores your public Stellar address, your public encryption key, your username, your push token, prekeys (public), and each encrypted message until it is delivered (at most 14 days if never collected). Usage logs keep a salted hash of your address and IP for 90 days, never message content.
 
-### Now — Testnet
-Working app. Real encryption. Real Stellar transactions. Open for community testing.
+## Source code
 
-### Next — Mainnet
-- Move to Stellar mainnet (real XLM)
-- Profile pictures
-- Auto-update system
-- Stable public APK on meshprotocol.ru
+The source code is currently **private**. We plan to share the design notes and a code map for independent cryptographic review, and to publish more once that is done. Watch this repository for that announcement.
 
-### Milestone 3 — seeking $15,000
-- Voice notes
-- Image and file sharing
-- Push notifications
-- Relay federation across multiple countries
+## FAQ
 
-### Milestone 4 — seeking $50,000
-- iOS app
-- Windows and macOS desktop
-- Video calls
-- Group chats
-- Open developer API
+**Do I need to pay anything?** No. Ordinary messages are free. Payments pay Stellar's network fee (0.00001 XLM). On testnet, XLM is free from Friendbot.
 
----
+**What if I lose my phone?** Install MESH on a new phone and enter your 12-word phrase to restore your account. Old chats stay on the old phone.
 
-## Privacy and Security
+**Can MESH read my messages?** No. Messages are encrypted on your phone with keys the relay never has. It can see who sent to whom and when.
 
-- Messages are encrypted **on your device** before they leave
-- The relay server never sees plaintext — only encrypted pointers
-- MESH collects no personal data — no name, no email, no phone number
-- Your keys never leave your device
-- Full privacy policy: [meshprotocol.ru/privacy.html](https://meshprotocol.ru/privacy.html)
+**Where is the relay?** On a VPS in Moscow (RUVDS). See Known limits.
 
----
+## Contact
 
-## Frequently Asked Questions
-
-**Do I need to pay anything?**
-No. The app is free. Each message costs 0.00001 XLM (about $0.000003). On testnet, XLM is free from Friendbot.
-
-**What if I lose my phone?**
-Install MESH on a new device and enter your 12-word recovery phrase. Your account and keys are restored instantly. Your message history is stored locally so new messages will arrive but old ones are gone.
-
-**Can MESH read my messages?**
-No. Technically impossible. Messages are encrypted with your keys before leaving your device. We never have your private key.
-
-**Is the source code open?**
-The source code is currently private. It will be made public at v0.0.1 mainnet launch. The protocol architecture is fully documented above.
-
-**Where is the relay server?**
-The relay server runs on a VPS in Russia. It stores only your Stellar public address, NaCl public key, and username — all public by design. Message content is never stored on the relay.
-
----
-
-## Contact and Community
-
-- Website: [meshprotocol.ru](https://meshprotocol.ru)
-- Talk to us: [meshprotocol.ru/community.html](https://meshprotocol.ru/community.html)
+- Bugs, questions, security concerns: [GitHub Issues](https://github.com/Mohamed9522/mesh-protocol-public/issues)
 - Email: contact@meshprotocol.ru
-- Support: support@meshprotocol.ru
+- Website: [meshprotocol.ru](https://meshprotocol.ru)
 
----
+## Version history
 
-## Build History
-
-| Version | Date | Network | Changes |
-|---------|------|---------|---------|
-| v0.0.14 | 2026-04-02 | Testnet | Wallpaper, accent color, change username, settings overhaul |
-| v0.0.13 | 2026-03-31 | Testnet | Accept request fix, attachment sheet, mic button redesign |
-| v0.0.12 | 2026-03-30 | Testnet | Input bar, Settings screen, accept bug fix |
-| v0.0.11 | 2026-03-29 | Testnet | Message requests, Welcome screen, username lookup |
+| Version | Date | Notes |
+|---|---|---|
+| 0.2.0 (build 6) + updates | Sept 2026 | Relay-only delivery, signed requests, push, photos, safety numbers, forward secrecy, encrypted storage, app lock, message actions. Current beta. |
+| v0.0.14 and earlier | Mar to Apr 2026 | First prototype. **Obsolete**; cannot connect. |
 
 ---
 
