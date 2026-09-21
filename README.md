@@ -62,11 +62,11 @@ Sender's phone                       Relay (temporary)                 Recipient
 
 ## Download
 
-The current beta build is **0.2.0 (build 6)**. It will be published on the [Releases page](https://github.com/Mohamed9522/mesh-protocol-public/releases) together with its **SHA-256 checksum**. Check the checksum before installing.
+The current beta build is **0.2.1 (build 7)**. It will be published on the [Releases page](https://github.com/Mohamed9522/mesh-protocol-public/releases) together with its **SHA-256 checksum**. Check the checksum before installing.
 
 > ⚠️ The older **v0.0.14** release on that page is **obsolete**. It targets a server that no longer exists and cannot connect. Do not use it.
 
-Requirements: Android 7.0 or newer. The APK is about 117 MB. It is installed outside Google Play, so Android will ask you to allow installs from your browser or file manager.
+Requirements: Android 7.0 or newer. The APK is about 115 MB. It is installed outside Google Play, so Android will ask you to allow installs from your browser or file manager.
 
 ## Getting started
 
@@ -135,7 +135,8 @@ Most of the source code is currently **private**. The **cryptography is public f
 
 | Version | Date | Notes |
 |---|---|---|
-| 0.2.0 (build 6) + updates | Sept 2026 | Relay-only delivery, signed requests, push, photos, safety numbers, forward secrecy, encrypted storage, app lock, message actions. Current beta. |
+| 0.2.1 (build 7) | Sept 2026 | Current beta. Same as 0.2.0 without the unused microphone, audio-settings and draw-over-other-apps permissions. |
+| 0.2.0 (build 6) | Sept 2026 | Relay-only delivery, signed requests, push, photos, safety numbers, forward secrecy, encrypted storage, app lock, message actions. |
 | v0.0.14 and earlier | Mar to Apr 2026 | First prototype. **Obsolete**; cannot connect. |
 
 ---
