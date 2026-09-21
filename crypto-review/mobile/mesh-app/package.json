@@ -1,0 +1,15 @@
+{
+  "name": "mesh-crypto-review",
+  "version": "0.0.0",
+  "private": true,
+  "description": "MESH Protocol cryptography, extracted for independent review. Not the app.",
+  "scripts": {
+    "test": "node --experimental-default-type=module --test test/ratchet.test.js test/messenger.test.js"
+  },
+  "dependencies": {
+    "@noble/curves": "2.0.1",
+    "@noble/hashes": "2.0.1",
+    "tweetnacl": "1.0.3",
+    "tweetnacl-util": "0.15.1"
+  }
+}

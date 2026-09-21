@@ -6,7 +6,7 @@ End-to-end encrypted with forward secrecy. Identity is a 12-word recovery phrase
 🌐 [meshprotocol.ru](https://meshprotocol.ru) · 📧 contact@meshprotocol.ru · 🐞 [Report an issue](https://github.com/Mohamed9522/mesh-protocol-public/issues)
 
 > **Status: testnet beta, early software, built by one developer.**
-> Payments use **Stellar testnet: no real funds**. The cryptography has **not** yet had an independent review (a review package is being prepared). Please read [Known limits](#known-limits) before you use it.
+> Payments use **Stellar testnet: no real funds**. The cryptography has **not** yet had an independent review (the code is published in [`crypto-review/`](crypto-review/REVIEW.md) for anyone to review). Please read [Known limits](#known-limits) before you use it.
 
 ---
 
@@ -113,7 +113,7 @@ Today there is one relay, run by us. The goal is a **network of relays that anyo
 
 ## Source code
 
-The source code is currently **private**. We plan to share the design notes and a code map for independent cryptographic review, and to publish more once that is done. Watch this repository for that announcement.
+Most of the source code is currently **private**. The **cryptography is public for independent review**: see [`crypto-review/`](crypto-review/REVIEW.md) (the ratchet, session handling, prekeys, the storage vault, their tests, and a reviewer's guide, with 60 tests you can run yourself). We are not cryptographers and this has not been reviewed; if you know this area, please tell us what is wrong, by [opening an issue](https://github.com/Mohamed9522/mesh-protocol-public/issues). More will be published after that review.
 
 ## FAQ
 
