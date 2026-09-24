@@ -5,7 +5,7 @@
 area can find what we got wrong. **We are not cryptographers, the design has had no outside review, and it is not
 wire-compatible with Signal.** The rest of the source is private for now.
 
-**Licence:** no licence is granted for use other than reading, running the tests and commenting. That may change after review.
+**Licence:** this repository, including this folder, is licensed under the GNU Affero General Public License v3.0 (AGPLv3) — see [`LICENSE`](../LICENSE) at the repository root. In short: you may use, modify and redistribute this code, including running a modified version as a network service, but any such distribution or hosted service must make its own source available under the same license.
 
 **How to send feedback:** open an issue at https://github.com/Mohamed9522/mesh-protocol-public/issues (label it `crypto-review`).
 Specific findings ("step X in `ratchet.js` line N is wrong because...") help most; general opinions are welcome too.

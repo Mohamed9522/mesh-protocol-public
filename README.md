@@ -115,6 +115,8 @@ Today there is one relay, run by us. The goal is a **network of relays that anyo
 
 Most of the source code is currently **private**. The **cryptography is public for independent review**: see [`crypto-review/`](crypto-review/REVIEW.md) (the ratchet, session handling, prekeys, the storage vault, their tests, and a reviewer's guide, with 60 tests you can run yourself). We are not cryptographers and this has not been reviewed; if you know this area, please tell us what is wrong, by [opening an issue](https://github.com/Mohamed9522/mesh-protocol-public/issues). More will be published after that review.
 
+This repository is licensed under [AGPLv3](LICENSE).
+
 ## FAQ
 
 **Do I need to pay anything?** No. Ordinary messages are free. Payments pay Stellar's network fee (0.00001 XLM). On testnet, XLM is free from Friendbot.
