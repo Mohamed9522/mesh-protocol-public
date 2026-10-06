@@ -60,24 +60,9 @@ Sender's phone                       Relay (temporary)                 Recipient
 | Profile pictures | 🔲 Planned |
 | iOS, desktop | 🔲 Planned |
 
-## Download
+## Downloads paused
 
-The current beta build is **0.2.1 (build 7)**. It will be published on the [Releases page](https://github.com/Mohamed9522/mesh-protocol-public/releases) together with its **SHA-256 checksum**. Check the checksum before installing.
-
-> ⚠️ The older **v0.0.14** release on that page is **obsolete**. It targets a server that no longer exists and cannot connect. Do not use it.
-
-Requirements: Android 7.0 or newer. The APK is about 115 MB. It is installed outside Google Play, so Android will ask you to allow installs from your browser or file manager.
-
-## Getting started
-
-1. **Install the APK** (allow "Install unknown apps" for the app you downloaded it with).
-2. **Create your identity.** MESH shows a 12-word recovery phrase. **Write it on paper and keep it safe.** It is your account. If you lose it, nobody, including us, can recover it.
-3. **Choose a username** (letters, numbers, underscores).
-4. **Get testnet XLM.** Open your profile, copy your address (it starts with `G`), and visit `https://friendbot.stellar.org/?addr=YOUR_ADDRESS`. These are test coins with no value.
-5. **Find someone.** Use Search to look up a username. Start a chat. If a stranger writes to you first, it appears in Message Requests.
-6. **Send test XLM** from the attach menu in a chat. The receiver's phone shows the payment as verified on Stellar.
-7. **Optional:** turn on App lock under Settings, then Security. Compare **safety numbers** with a friend from the contact's profile.
-8. **Updates** arrive on their own; Settings has "Check for updates".
+**MESH is under maintenance and being rebranded.** Downloads of the app are paused, and no build is offered here for now. This repository stays up for the published cryptography (`crypto-review/`). We will announce when a new version is available.
 
 ## Known limits
 
